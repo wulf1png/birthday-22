@@ -17,6 +17,7 @@
       background: radial-gradient(circle at bottom, #0a001a, #000);
       color: white;
       overflow-x: hidden;
+      overflow-y: auto;
     }
 
     canvas {
@@ -29,8 +30,8 @@
     .container {
       position: relative;
       z-index: 1;
-      min-height: 100vh;
-      padding: 40px 20px 80px;
+      width: 100%;
+      padding: 40px 20px 140px; /* БОЛЬШОЙ НИЖНИЙ ОТСТУП */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -48,7 +49,7 @@
       max-width: 520px;
       line-height: 1.6;
       text-shadow: 0 0 10px rgba(255,255,255,0.4);
-      margin: 10px 0;
+      margin: 14px 0;
     }
 
     /* ФОТО — ЦЕЛИКОМ */
@@ -81,6 +82,7 @@
       animation: floatUp linear forwards;
       opacity: 0.8;
       z-index: 0;
+      pointer-events: none;
     }
 
     .heart::before,
@@ -110,7 +112,7 @@
       }
       10% { opacity: 1; }
       to {
-        transform: translateY(-120vh) rotate(45deg);
+        transform: translateY(-140vh) rotate(45deg);
         opacity: 0;
       }
     }
@@ -134,8 +136,14 @@
   </p>
 
   <p>
-    Кто-то очень старался,  
-    чтобы ты сейчас улыбнулась 😌
+    Этот квест — не просто игра.  
+    Это способ сказать, как ты важна 😌
+  </p>
+
+  <p>
+    Листай вниз —  
+    тут всё заканчивается,  
+    но начинается кое-что очень приятное 💕
   </p>
 </div>
 
@@ -147,7 +155,7 @@
     heart.style.left = Math.random() * 100 + 'vw';
     heart.style.animationDuration = (4 + Math.random() * 4) + 's';
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 8000);
+    setTimeout(() => heart.remove(), 9000);
   }, 300);
 
   /* САЛЮТ */
@@ -164,7 +172,7 @@
 
   function firework() {
     const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height * 0.4;
+    const y = Math.random() * canvas.height * 0.35;
     const particles = 60;
 
     for (let i = 0; i < particles; i++) {
