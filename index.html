@@ -31,7 +31,7 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      padding: 40px 20px 140px; /* БОЛЬШОЙ НИЖНИЙ ОТСТУП */
+      padding: 40px 20px 140px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -52,7 +52,7 @@
       margin: 14px 0;
     }
 
-    /* ФОТО — ЦЕЛИКОМ */
+    /* ФОТО */
     .photo {
       width: 90vw;
       max-width: 380px;
@@ -74,15 +74,13 @@
     /* СЕРДЕЧКИ */
     .heart {
       position: fixed;
-      bottom: -30px;
       width: 18px;
       height: 18px;
       background: #ff4da6;
       transform: rotate(45deg);
-      animation: floatUp linear forwards;
-      opacity: 0.8;
-      z-index: 0;
+      opacity: 0.9;
       pointer-events: none;
+      z-index: 2;
     }
 
     .heart::before,
@@ -108,11 +106,17 @@
     @keyframes floatUp {
       from {
         transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-140px) rotate(45deg);
         opacity: 0;
       }
-      10% { opacity: 1; }
+    }
+
+    @keyframes burst {
       to {
-        transform: translateY(-140vh) rotate(45deg);
+        transform: translate(var(--x), var(--y)) rotate(45deg);
         opacity: 0;
       }
     }
@@ -139,19 +143,39 @@
     Этот квест — не просто игра.  
     Это способ сказать, как ты важна 💕
   </p>
-
 </div>
 
 <script>
-  /* СЕРДЕЧКИ */
+  /* ЛЕТЯЩИЕ СЕРДЦА СНИЗУ */
   setInterval(() => {
     const heart = document.createElement('div');
     heart.className = 'heart';
     heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+    heart.style.bottom = '-30px';
+    heart.style.animation = 'floatUp 6s linear forwards';
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 9000);
-  }, 300);
+    setTimeout(() => heart.remove(), 6000);
+  }, 350);
+
+  /* СЕРДЦА ПО КЛИКУ / ТАПУ */
+  document.addEventListener('click', (e) => {
+    for (let i = 0; i < 8; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 60 + Math.random() * 40;
+
+      heart.style.left = e.clientX + 'px';
+      heart.style.top = e.clientY + 'px';
+      heart.style.setProperty('--x', Math.cos(angle) * distance + 'px');
+      heart.style.setProperty('--y', Math.sin(angle) * distance + 'px');
+      heart.style.animation = 'burst 800ms ease-out forwards';
+
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 800);
+    }
+  });
 
   /* САЛЮТ */
   const canvas = document.getElementById('fireworks');
@@ -196,4 +220,3 @@
 
 </body>
 </html>
-
