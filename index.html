@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>С Днём Рождения ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      background: radial-gradient(circle at bottom, #0a001a, #000);
+      color: white;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 15px #ff4da6;
+    }
+
+    p {
+      font-size: 1.2em;
+      max-width: 500px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.4);
+    }
+
+    .photo {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      margin: 25px 0;
+      object-fit: cover;
+      border: 4px solid #ff4da6;
+      box-shadow: 0 0 25px #ff4da6;
+      animation: pulse 3s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 20px #ff4da6; }
+      50% { box-shadow: 0 0 40px #ff80bf; }
+      100% { box-shadow: 0 0 20px #ff4da6; }
+    }
+
+    /* Сердечки */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      width: 20px;
+      height: 20px;
+      background: #ff4da6;
+      transform: rotate(45deg);
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff4da6;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      100% {
+        transform: translateY(-110vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    /* Салют */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<div class="container">
+  <h1>С Днём Рождения 🎉</h1>
+  <p>Тебе сегодня 22, и я хочу, чтобы ты знала — ты невероятная 💖</p>
+
+  <!-- ВСТАВЬ СВОЁ ФОТО -->
+  <img src="photo.jpg" alt="Фото" class="photo">
+
+  <p>
+    Этот день — про тебя.  
+    Улыбайся, мечтай и знай:  
+    кто-то очень сильно старался ради этой улыбки 😌
+  </p>
+</div>
+
+<script>
+  // Генерация сердечек
+  setInterval(() => {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+  }, 300);
+
+  // Салют
+  const canvas = document.getElementById('fireworks');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function firework() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height / 2;
+    const particles = 60;
+
+    for (let i = 0; i < particles; i++) {
+      const angle = (Math.PI * 2 / particles) * i;
+      const speed = Math.random() * 4 + 2;
+      let px = x, py = y;
+      let vx = Math.cos(angle) * speed;
+      let vy = Math.sin(angle) * speed;
+      let life = 60;
+
+      const interval = setInterval(() => {
+        ctx.fillStyle = 'rgba(255, 100, 200, 0.8)';
+        ctx.fillRect(px, py, 2, 2);
+        px += vx;
+        py += vy;
+        vy += 0.05;
+        life--;
+        if (life <= 0) clearInterval(interval);
+      }, 16);
+    }
+  }
+
+  setInterval(firework, 1200);
+</script>
+
+</body>
+</html>
