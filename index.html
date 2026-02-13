@@ -4,15 +4,23 @@
   <meta charset="UTF-8" />
   <title>С Днём Рождения ❤️</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       overflow: hidden;
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       background: radial-gradient(circle at bottom, #0a001a, #000);
       color: white;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
     }
 
     .container {
@@ -25,47 +33,51 @@
       justify-content: center;
       text-align: center;
       padding: 20px;
+      box-sizing: border-box;
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 2.4em;
       margin-bottom: 10px;
       text-shadow: 0 0 15px #ff4da6;
     }
 
     p {
-      font-size: 1.2em;
-      max-width: 500px;
+      font-size: 1.15em;
+      max-width: 520px;
       text-shadow: 0 0 10px rgba(255,255,255,0.4);
+      line-height: 1.5;
     }
 
+    /* ФОТО — ЦЕЛИКОМ, БЕЗ ОБРЕЗКИ */
     .photo {
-  width: 80vw;
-  max-width: 360px;
-  height: auto;
-  border-radius: 20px;
-  margin: 25px 0;
-  object-fit: contain;
-  border: 4px solid #ff4da6;
-  box-shadow: 0 0 30px #ff4da6;
-}
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 20px #ff4da6; }
-      50% { box-shadow: 0 0 40px #ff80bf; }
-      100% { box-shadow: 0 0 20px #ff4da6; }
+      width: 85vw;
+      max-width: 380px;
+      height: auto;
+      margin: 25px 0;
+      object-fit: contain;
+      border-radius: 18px;
+      border: 4px solid #ff4da6;
+      box-shadow: 0 0 35px #ff4da6;
+      animation: glow 3s infinite;
     }
 
-    /* Сердечки */
+    @keyframes glow {
+      0%   { box-shadow: 0 0 25px #ff4da6; }
+      50%  { box-shadow: 0 0 45px #ff80bf; }
+      100% { box-shadow: 0 0 25px #ff4da6; }
+    }
+
+    /* СЕРДЕЧКИ */
     .heart {
       position: absolute;
-      bottom: -20px;
+      bottom: -30px;
       width: 20px;
       height: 20px;
       background: #ff4da6;
       transform: rotate(45deg);
       animation: floatUp 6s linear infinite;
-      opacity: 0.7;
+      opacity: 0.75;
     }
 
     .heart::before,
@@ -99,36 +111,30 @@
         opacity: 0;
       }
     }
-
-    /* Салют */
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1;
-    }
   </style>
 </head>
+
 <body>
 
 <canvas id="fireworks"></canvas>
 
 <div class="container">
   <h1>С Днём Рождения 🎉</h1>
-  <p>Тебе сегодня 22, и я хочу, чтобы ты знала — ты невероятная 💖</p>
 
-  <!-- ВСТАВЬ СВОЁ ФОТО -->
+  <p>Тебе сегодня 22, и ты невероятная 💖</p>
+
+  <!-- ФОТО -->
   <img src="photo.jpg" alt="Фото" class="photo">
 
   <p>
-    Этот день — про тебя.  
-    Улыбайся, мечтай и знай:  
-    кто-то очень сильно старался ради этой улыбки 😌
+    Пусть этот день будет наполнен улыбками,  
+    сюрпризами и теплом.  
+    Кто-то очень хотел, чтобы ты сейчас улыбнулась 😌
   </p>
 </div>
 
 <script>
-  // Генерация сердечек
+  /* СЕРДЕЧКИ */
   setInterval(() => {
     const heart = document.createElement('div');
     heart.className = 'heart';
@@ -138,7 +144,7 @@
     setTimeout(() => heart.remove(), 8000);
   }, 300);
 
-  // Салют
+  /* САЛЮТ */
   const canvas = document.getElementById('fireworks');
   const ctx = canvas.getContext('2d');
 
@@ -178,7 +184,4 @@
 </script>
 
 </body>
-
 </html>
-
-
