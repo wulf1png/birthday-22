@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>С Днём Рождения ❤️</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      overflow: hidden;
       font-family: Arial, sans-serif;
       background: radial-gradient(circle at bottom, #0a001a, #000);
       color: white;
+      overflow-x: hidden;
     }
 
     canvas {
       position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .container {
       position: relative;
-      z-index: 2;
-      height: 100%;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 40px 20px 80px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       text-align: center;
-      padding: 20px;
-      box-sizing: border-box;
     }
 
     h1 {
@@ -45,16 +46,17 @@
     p {
       font-size: 1.15em;
       max-width: 520px;
+      line-height: 1.6;
       text-shadow: 0 0 10px rgba(255,255,255,0.4);
-      line-height: 1.5;
+      margin: 10px 0;
     }
 
-    /* ФОТО — ЦЕЛИКОМ, БЕЗ ОБРЕЗКИ */
+    /* ФОТО — ЦЕЛИКОМ */
     .photo {
-      width: 85vw;
+      width: 90vw;
       max-width: 380px;
       height: auto;
-      margin: 25px 0;
+      margin: 30px 0;
       object-fit: contain;
       border-radius: 18px;
       border: 4px solid #ff4da6;
@@ -70,44 +72,45 @@
 
     /* СЕРДЕЧКИ */
     .heart {
-      position: absolute;
+      position: fixed;
       bottom: -30px;
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       background: #ff4da6;
       transform: rotate(45deg);
-      animation: floatUp 6s linear infinite;
-      opacity: 0.75;
+      animation: floatUp linear forwards;
+      opacity: 0.8;
+      z-index: 0;
     }
 
     .heart::before,
     .heart::after {
       content: '';
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       background: #ff4da6;
       border-radius: 50%;
     }
 
     .heart::before {
-      top: -10px;
+      top: -9px;
       left: 0;
     }
 
     .heart::after {
-      left: -10px;
+      left: -9px;
       top: 0;
     }
 
     @keyframes floatUp {
-      0% {
+      from {
         transform: translateY(0) rotate(45deg);
         opacity: 0;
       }
       10% { opacity: 1; }
-      100% {
-        transform: translateY(-110vh) rotate(45deg);
+      to {
+        transform: translateY(-120vh) rotate(45deg);
         opacity: 0;
       }
     }
@@ -121,15 +124,18 @@
 <div class="container">
   <h1>С Днём Рождения 🎉</h1>
 
-  <p>Тебе сегодня 22, и ты невероятная 💖</p>
+  <p>Тебе сегодня 22 — и ты невероятная 💖</p>
 
-  <!-- ФОТО -->
   <img src="photo.jpg" alt="Фото" class="photo">
 
   <p>
-    Пусть этот день будет наполнен улыбками,  
-    сюрпризами и теплом.  
-    Кто-то очень хотел, чтобы ты сейчас улыбнулась 😌
+    Пусть этот день будет наполнен  
+    улыбками, сюрпризами и теплом.
+  </p>
+
+  <p>
+    Кто-то очень старался,  
+    чтобы ты сейчас улыбнулась 😌
   </p>
 </div>
 
@@ -152,24 +158,26 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
+
   window.addEventListener('resize', resize);
   resize();
 
   function firework() {
     const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height / 2;
+    const y = Math.random() * canvas.height * 0.4;
     const particles = 60;
 
     for (let i = 0; i < particles; i++) {
       const angle = (Math.PI * 2 / particles) * i;
       const speed = Math.random() * 4 + 2;
-      let px = x, py = y;
+      let px = x;
+      let py = y;
       let vx = Math.cos(angle) * speed;
       let vy = Math.sin(angle) * speed;
       let life = 60;
 
       const interval = setInterval(() => {
-        ctx.fillStyle = 'rgba(255, 100, 200, 0.8)';
+        ctx.fillStyle = 'rgba(255, 120, 200, 0.8)';
         ctx.fillRect(px, py, 2, 2);
         px += vx;
         py += vy;
@@ -180,7 +188,7 @@
     }
   }
 
-  setInterval(firework, 1200);
+  setInterval(firework, 1300);
 </script>
 
 </body>
